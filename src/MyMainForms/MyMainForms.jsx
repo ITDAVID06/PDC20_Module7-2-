@@ -1,24 +1,54 @@
 import React from "react";
-import {Routes, Route, Link} from 'react-router-dom';
+import { Routes, Route, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import BasicForms from "./BasicForms";
+import ControlledInput from "./ControlledInput";
+import UnControlledInput from "./UncontrolledInput";
+import TabbedForm from "./TabForm/TabbedForm";
 
 const MyMainForms = () => {
     return (
-        <div>
-            <h1>React Forms App</h1>
-            <nav>
-                <ul>
-                    <li><Link to="basic-form">Basic Form</Link></li>
+        <div className="container my-5">
+            <div className="text-center mb-4">
+                <h1 className="display-4">React Forms App</h1>
+            </div>
+            <nav className="mb-4">
+                <ul className="nav nav-pills justify-content-center">
+                    <li className="nav-item">
+                        <Link to="basic-form" className="nav-link">
+                            Basic Form
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="controlled-input" className="nav-link">
+                            Controlled Input
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="uncontrolled-input" className="nav-link">
+                            Uncontrolled Input
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="tabbed-form" className="nav-link">
+                            Tabbed Form
+                        </Link>
+                    </li>
                 </ul>
             </nav>
-            <Routes>
-                <Route path="basic-form" element={<BasicForms/>}/>
-            </Routes>
-
+            <div className="card shadow-sm">
+                <div className="card-body">
+                    <Routes>
+                        <Route path="basic-form" element={<BasicForms />} />
+                        <Route path="controlled-input" element={<ControlledInput />} />
+                        <Route path="uncontrolled-input" element={<UnControlledInput />} />
+                        <Route path="tabbed-form" element={<TabbedForm />} />
+                    </Routes>
+                </div>
+            </div>
         </div>
-
     );
-}
+};
 
 export default MyMainForms;
