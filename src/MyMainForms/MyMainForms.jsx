@@ -32,7 +32,7 @@ const MyMainForms = () => {
                     </li>
                     <li className="nav-item">
                         <Link to="tabbed-form" className="nav-link">
-                            Tabbed Form
+                            Registration Form
                         </Link>
                     </li>
                 </ul>

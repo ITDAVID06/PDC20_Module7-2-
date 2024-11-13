@@ -1,82 +1,85 @@
-import React from "react";
+import React from 'react';
 
-const TabContent = ({ activeTab, formData, onChange }) => {
+const TabContent = ({ activeTab, formData, onChange, errors }) => {
+    const renderInput = (label, field, type = 'text', placeholder = '') => (
+        <div className="mb-3">
+            <label className="form-label">{label}:</label>
+            <input
+                type={type}
+                className={`form-control ${errors[field] ? 'is-invalid' : ''}`}
+                value={formData[field] || ''}
+                onChange={(e) => onChange(field, e.target.value)}
+                placeholder={placeholder}
+            />
+            {errors[field] && <div className="invalid-feedback">{errors[field]}</div>}
+        </div>
+    );
+
+    const renderSelect = (label, field, options = []) => (
+        <div className="mb-3">
+            <label className="form-label">{label}:</label>
+            <select
+                className={`form-control ${errors[field] ? 'is-invalid' : ''}`}
+                value={formData[field] || ''}
+                onChange={(e) => onChange(field, e.target.value)}
+            >
+                <option value="">Select {label}</option>
+                {options.map((option, index) => (
+                    <option key={index} value={option}>
+                        {option}
+                    </option>
+                ))}
+            </select>
+            {errors[field] && <div className="invalid-feedback">{errors[field]}</div>}
+        </div>
+    );
+
     return (
         <div className="p-4">
-            {activeTab === 'basic' && (
+            {activeTab === 'personal' && (
                 <div className="card p-3 mb-3">
-                    <h4 className="mb-4">Basic Info</h4>
-                    <div className="mb-3">
-                        <label className="form-label">Name:</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={formData.name}
-                            onChange={(e) => onChange('name', e.target.value)}
-                            placeholder="Enter your name"
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">Age:</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={formData.age}
-                            onChange={(e) => onChange('age', e.target.value)}
-                            placeholder="Enter your age"
-                        />
-                    </div>
+                    <h4>Personal Information</h4>
+                    {renderInput('First Name', 'firstName', 'text', 'Enter your first name')}
+                    {renderInput('Last Name', 'lastName', 'text', 'Enter your last name')}
+                    {renderInput('Date of Birth', 'dob', 'date')}
+                    {renderSelect('Gender', 'gender', ['Male', 'Female', 'Other'])}
                 </div>
             )}
 
             {activeTab === 'contact' && (
                 <div className="card p-3 mb-3">
-                    <h4 className="mb-4">Contact Info</h4>
-                    <div className="mb-3">
-                        <label className="form-label">Email:</label>
-                        <input
-                            type="email"
-                            className="form-control"
-                            value={formData.email}
-                            onChange={(e) => onChange('email', e.target.value)}
-                            placeholder="Enter your email"
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">Phone:</label>
-                        <input
-                            type="tel"
-                            className="form-control"
-                            value={formData.phone}
-                            onChange={(e) => onChange('phone', e.target.value)}
-                            placeholder="Enter your phone"
-                        />
-                    </div>
+                    <h4>Contact Information</h4>
+                    {renderInput('Email', 'email', 'email', 'Enter your email')}
+                    {renderInput('Phone Number', 'phone', 'tel', 'Enter your phone number')}
+                    {renderInput('Address', 'address', 'text', 'Enter your address')}
+                    {renderInput('City', 'city', 'text', 'Enter your city')}
                 </div>
             )}
 
-            {activeTab === 'account' && (
+            {activeTab === 'academic' && (
                 <div className="card p-3 mb-3">
-                    <h4 className="mb-4">Account Info</h4>
+                    <h4>Academic Information</h4>
+                    {renderInput('Student ID', 'studentId', 'text', 'Enter your student ID')}
+                    {renderInput('Program', 'program', 'text', 'Enter your program')}
+                    {renderInput('Year Level', 'yearLevel', 'text', 'Enter your year level')}
+                    {renderInput('GPA', 'gpa', 'text', 'Enter your GPA')}
+                </div>
+            )}
+
+            {activeTab === 'additional' && (
+                <div className="card p-3 mb-3">
+                    <h4>Additional Details</h4>
+                    {renderInput('Hobbies', 'hobbies', 'text', 'Enter your hobbies')}
+                    {renderInput('Skills', 'skills', 'text', 'Enter your skills')}
                     <div className="mb-3">
-                        <label className="form-label">Username:</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            value={formData.username}
-                            onChange={(e) => onChange('username', e.target.value)}
-                            placeholder="Enter your username"
+                        <label className="form-label">Other Notes:</label>
+                        <textarea
+                            className={`form-control ${errors.notes ? 'is-invalid' : ''}`}
+                            value={formData.notes || ''}
+                            onChange={(e) => onChange('notes', e.target.value)}
+                            placeholder="Enter any other notes"
                         />
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">Password:</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            value={formData.password}
-                            onChange={(e) => onChange('password', e.target.value)}
-                            placeholder="Enter your password"
-                        />
+                        {errors.notes && <div className="invalid-feedback">{errors.notes}</div>}
                     </div>
                 </div>
             )}
